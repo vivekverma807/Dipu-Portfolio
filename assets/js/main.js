@@ -264,3 +264,14 @@ document.addEventListener('DOMContentLoaded', function() {
         sectionObserver.observe(skillsSection);
     }
 });
+
+function myMenuFunction() {
+    const navMenu = document.getElementById("myNavMenu");
+    const menuBtn = document.querySelector('.nav-menu-btn');
+    
+    navMenu.classList.toggle("responsive");
+    menuBtn.classList.toggle("active");
+    
+    // Prevent body scroll when menu is open
+    document.body.style.overflow = navMenu.classList.contains("responsive") ? "hidden" : "";
+}

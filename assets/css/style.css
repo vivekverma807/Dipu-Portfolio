@@ -198,7 +198,6 @@ nav {
     display: flex;
     align-items: center;
 }
-
 /* ----- MOBILE MENU STYLES ----- */
 @media only screen and (max-width: 900px) {
     nav {
@@ -214,12 +213,14 @@ nav {
         background: rgba(255, 255, 255, 0.98);
         backdrop-filter: blur(10px);
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start; /* Changed from center to flex-start */
         align-items: center;
         transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1.0);
         z-index: 1000;
         opacity: 0;
         visibility: hidden;
+        padding-top: 80px; /* Added padding to prevent menu items from being hidden behind header */
+        overflow-y: auto; /* Added scrolling for small screens */
     }
     
     .nav-menu.responsive {
@@ -231,7 +232,8 @@ nav {
     .nav_menu_list {
         flex-direction: column;
         text-align: center;
-        gap: 2rem;
+        gap: 1rem; /* Reduced from 2rem to 1rem for less vertical spacing */
+        width: 100%; /* Added to ensure full width */
     }
     
     .nav_list {
@@ -239,6 +241,7 @@ nav {
         opacity: 0;
         transform: translateY(20px);
         transition: all 0.4s ease;
+        width: 100%; /* Added to ensure full width */
     }
     
     .nav-menu.responsive .nav_list {
@@ -252,12 +255,15 @@ nav {
     .nav-menu.responsive .nav_list:nth-child(3) { transition-delay: 0.3s; }
     .nav-menu.responsive .nav_list:nth-child(4) { transition-delay: 0.4s; }
     .nav-menu.responsive .nav_list:nth-child(5) { transition-delay: 0.5s; }
+    .nav-menu.responsive .nav_list:nth-child(6) { transition-delay: 0.6s; } /* Added for all 7 menu items */
+    .nav-menu.responsive .nav_list:nth-child(7) { transition-delay: 0.7s; } /* Added for all 7 menu items */
     
     .nav-link {
-        padding: 15px 25px;
-        font-size: 1.2rem;
+        padding: 12px 25px; /* Reduced padding for better fit */
+        font-size: 1.1rem; /* Slightly smaller font */
         display: block;
         transition: color 0.3s ease;
+        width: 100%; /* Added to ensure full width */
     }
     
     .active-link::after {
@@ -265,6 +271,21 @@ nav {
     }
     
     .nav-menu-btn {
+        display: block;
+        position: relative;
+        z-index: 1001;
+    }
+    
+    /* Close button styling */
+    .nav-menu-btn .close-icon {
+        display: none;
+    }
+
+    .nav-menu-btn.active .menu-icon {
+        display: none;
+    }
+
+    .nav-menu-btn.active .close-icon {
         display: block;
     }
     
