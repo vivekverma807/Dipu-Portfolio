@@ -187,13 +187,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Prevent horizontal scrolling
-function preventHorizontalScroll() {
-    document.addEventListener('scroll', function(e) {
-        if (window.scrollY !== 0) {
-            window.scrollTo(0, window.scrollY);
-        }
-    });
-}
+// function preventHorizontalScroll() {
+//     document.addEventListener('scroll', function(e) {
+//         if (window.scrollY !== 0) {
+//             window.scrollTo(0, window.scrollY);
+//         }
+//     });
+// }
 
 // Fix for mobile viewport height
 function setViewportHeight() {
@@ -219,3 +219,48 @@ function isTouchDevice() {
 if (isTouchDevice()) {
     document.body.classList.add('touch-device');
 }
+
+// Animate progress bars when they come into view
+function animateProgressBars() {
+    const progressBars = document.querySelectorAll('.skill-progress-bar');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const progressBar = entry.target;
+                const width = progressBar.getAttribute('data-width');
+                progressBar.style.setProperty('--progress-width', width);
+                progressBar.classList.add('animate');
+                observer.unobserve(progressBar);
+            }
+        });
+    }, {
+        threshold: 0.5,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    progressBars.forEach(bar => {
+        observer.observe(bar);
+    });
+}
+
+// Initialize progress bar animation
+document.addEventListener('DOMContentLoaded', function() {
+    animateProgressBars();
+    
+    // Re-animate when scrolling back to skills section
+    const skillsSection = document.getElementById('about');
+    if (skillsSection) {
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateProgressBars();
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sectionObserver.observe(skillsSection);
+    }
+});
